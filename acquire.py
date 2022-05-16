@@ -1,38 +1,36 @@
 import pandas as pd
 import numpy as np
 import os
+
 from env import host, user, password
 
-###################### Acquire Titanic Data ######################
+# Acquire Titanic Data
 
 def get_connection(db, user=user, host=host, password=password):
     '''
-    get_connection uses my info from my env file to
-    create a connection url to access the Codeup db.
+    get_connection uses login info from env.py file to access Codeup db.
     It takes in a string name of a database as an argument.
     '''
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
     
     
-    
 def new_titanic_data():
     '''
-    def new_titanic_data() reads the titanic data from the Codeup db into a df,
-    write it to a csv file, and returns the df.
+    new_titanic_data() gets the titanic data from Codeup db, then writes it to a csv file,
+    and returns the df.
     '''
     # Create SQL query.
     sql_query = 'SELECT * FROM passengers'
     
     # Read in DataFrame from Codeup db.
     df = pd.read_sql(sql_query, get_connection('titanic_db'))
-    
     return df
 
 
 
 def get_titanic_data():
     '''
-    This function reads in titanic data from Codeup database, writes data to
+    get_titanic_data reads in titanic data from Codeup database, writes data to
     a csv file if a local file does not exist, and returns a df.
     '''
     if os.path.isfile('titanic_df.csv'):
@@ -50,13 +48,13 @@ def get_titanic_data():
         
     return df
 
-###################### Acquire Iris Data ######################
+# Acquire Iris Data
 
 def new_iris_data():
     '''
-    This function reads the iris data from the Codeup db into a df.
+    new_iris_data reads the iris data from the Codeup db into a df.
     '''
-    sql_query = """
+    sql_query = '''
                 SELECT 
                     species_id,
                     species_name,
@@ -66,7 +64,7 @@ def new_iris_data():
                     petal_width
                 FROM measurements
                 JOIN species USING(species_id)
-                """
+                '''
     
     # Read in DataFrame from Codeup db.
     df = pd.read_sql(sql_query, get_connection('iris_db'))
@@ -76,7 +74,7 @@ def new_iris_data():
 
 def get_iris_data():
     '''
-    This function reads in iris data from Codeup database, writes data to
+    get_iris_data reads in iris data from Codeup database, writes data to
     a csv file if a local file does not exist, and returns a df.
     '''
     if os.path.isfile('iris_df.csv'):
@@ -94,16 +92,18 @@ def get_iris_data():
         
     return df
 
+# Acquire Telco
+
 def new_telco_data():
     '''
-    This function reads the iris data from the Codeup db into a df.
+    new_telco_data reads the telco data from the Codeup db into a df.
     '''
-    sql_query = """
+    sql_query = '''
                 select * from customers
                 join contract_types using (contract_type_id)
                 join internet_service_types using (internet_service_type_id)
                 join payment_types using (payment_type_id)
-                """
+                '''
     
     # Read in DataFrame from Codeup db.
     df = pd.read_sql(sql_query, get_connection('telco_churn'))
@@ -112,7 +112,7 @@ def new_telco_data():
 
 def get_telco_data():
     '''
-    This function reads in iris data from Codeup database, writes data to
+    get_telco_data reads in telco data from Codeup database, writes data to
     a csv file if a local file does not exist, and returns a df.
     '''
     if os.path.isfile('telco.csv'):
