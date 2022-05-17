@@ -72,7 +72,7 @@ def clean_titanic_data(df):
     df = df.drop_duplicates()
 
     # Drops columns that are already represented by other columns
-    cols_to_drop = ['deck', 'embarked', 'class']
+    cols_to_drop = ['deck', 'embarked', 'class', 'passenger_id']
     df = df.drop(columns=cols_to_drop)
 
     # Fills the small number of null values for embark_town with the mode
