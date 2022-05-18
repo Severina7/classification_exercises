@@ -82,6 +82,9 @@ def clean_titanic_data(df):
     dummy_df = pd.get_dummies(df[['sex', 'embark_town']], dummy_na=False, drop_first=[True, True])
     df = pd.concat([df, dummy_df], axis=1)
 
+    # Drop sex now that it is not useful anymore
+    cols_to_drop = ['sex', 'embark_town']
+    df = df.drop(columns=cols_to_drop)
     return df
 
 def split_titanic_data(df):
